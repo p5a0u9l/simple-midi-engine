@@ -2,7 +2,7 @@ classdef Piece < handle
     properties
         tempo
         sample_rate
-        notes
+        bars
         audio
     end
 
@@ -22,21 +22,21 @@ classdef Piece < handle
             a = hanning(2*n_taper)';
             me.taper = a(1:n_taper);
 
-            me.notes = [];
+            me.bars = [];
         end
 
-        function me = append(me, note)
+        function me = append(me, bar0)
             note.create(me).window(me.taper);
-            me.notes = [me.notes; note];
+            me.bars = [me.bars; bar0];
         end
 
         function me = compile(me)
-            n_total = sum([me.notes.n_samp]);
+            n_total = sum([me.bars.n_samp]);
             me.audio = zeros(1, n_total);
             offset = 0;
-            for i = 1:length(me.notes)
-                me.audio((1:me.notes(i).n_samp) + offset) = me.notes(i).data;
-                offset = offset + me.notes(i).n_samp;
+            for i = 1:length(me.bars)
+                me.audio((1:me.bars(i).n_samp) + offset) = me.notes(i).data;
+                offset = offset + me.bars(i).n_samp;
             end
         end
 
