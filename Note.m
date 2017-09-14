@@ -1,23 +1,33 @@
 classdef Note < handle
     properties
+        name
+        scalar
         pitch       % frequency in Hz
         value       % length, fraction of bar, 1/4, 1/2, etc
         data
         n_samp
     end
 
+    properties(Constant, Hidden)
+        SEC_PER_MIN = 60;
+        BEAT_PER_BAR = 4;
+    end
+
+
     methods
-        function me = init(me, pitch, value)
+        function me = init(me, pitch, value, name, scalar)
+            me.scalar = scalar;
             me.pitch = pitch;
             me.value = value;
+            me.name = name;
         end
 
 
         function me = create(me, piece)
-            duration = 60/piece.tempo*4*me.value;
+            duration = me.SEC_PER_MIN/piece.tempo*me.BEAT_PER_BAR*me.value;
             N = round(duration*piece.sample_rate);
             t = (0:N - 1)/piece.sample_rate;
-            me.data = piece.f_wav(2*pi*me.pitch*t);
+            me.data = me.scalar*piece.decay_function(t).*piece.wav_function(2*pi*me.pitch*t);
             me.n_samp = N;
         end
 

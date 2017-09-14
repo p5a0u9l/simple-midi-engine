@@ -18,8 +18,8 @@ classdef Bar < handle
 
         function me = append(me, note, offset)
             me.notes = [me.notes; note];
-            i0 = round(me.duration*offset*me.sample_rate);
-            me.data((0:note.n_samp - 1) + i0) = note.data;
+            i0 = floor(me.duration*offset*me.sample_rate);
+            me.data((1:note.n_samp) + i0) = me.data((1:note.n_samp) + i0) + note.data;
         end
     end
 end
