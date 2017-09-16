@@ -1,7 +1,7 @@
 classdef Note < handle
     properties
         name
-        scalar
+        amplitude
         pitch       % frequency in Hz
         value       % length, fraction of bar, 1/4, 1/2, etc
         data
@@ -15,13 +15,12 @@ classdef Note < handle
 
 
     methods
-        function me = init(me, pitch, value, name, scalar)
-            me.scalar = scalar;
+        function me = init(me, pitch, value, name, amplitude)
+            me.amplitude = amplitude;
             me.pitch = pitch;
             me.value = value;
             me.name = name;
         end
-
 
         function me = create(me, piece)
             duration = me.SEC_PER_MIN/piece.tempo*me.BEAT_PER_BAR*me.value;
@@ -29,7 +28,7 @@ classdef Note < handle
             t = (0:N - 1)/piece.sample_rate;
             wave = piece.wav_function(2*pi*me.pitch*t);
             decay = piece.decay_function(t);
-            me.data = me.scalar*decay.*wave;
+            me.data = me.amplitude*decay.*wave;
             me.n_samp = N;
         end
 
