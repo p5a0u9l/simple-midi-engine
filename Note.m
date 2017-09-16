@@ -27,7 +27,9 @@ classdef Note < handle
             duration = me.SEC_PER_MIN/piece.tempo*me.BEAT_PER_BAR*me.value;
             N = round(duration*piece.sample_rate);
             t = (0:N - 1)/piece.sample_rate;
-            me.data = me.scalar*piece.decay_function(t).*piece.wav_function(2*pi*me.pitch*t);
+            wave = piece.wav_function(2*pi*me.pitch*t);
+            decay = piece.decay_function(t);
+            me.data = me.scalar*decay.*wave;
             me.n_samp = N;
         end
 

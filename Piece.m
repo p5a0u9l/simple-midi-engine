@@ -13,8 +13,8 @@ classdef Piece < handle
         function me = init(me, tempo, fs, tau)
             me.tempo = tempo;
             me.sample_rate = fs;
-            me.wav_function = @sin;
-            me.decay_function = @(t) exp(-tau*t);
+            me.wav_function = @(x) Wav.cos_sin(x);
+            me.decay_function = @(t) exp(-2*tau*t);
 
             taper_length = 0.025;
             n_taper = round(taper_length*me.sample_rate);

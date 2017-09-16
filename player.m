@@ -2,8 +2,8 @@
 [durations, pitches] = wtc_book1_prelude_in_c();
 notes_per_bar = 16;
 note_offset = 1/16;
-time_constant = 3;
-scalar = 1/4;
+time_constant = 1;
+scalar = 1/8;
 scale = readtable('frequencies_for_equal-tempered_scale.csv', 'ReadRowNames', 1);
 
 % init the Piece object
