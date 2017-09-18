@@ -1,4 +1,14 @@
 function piece = player(wave, bpm, tau, freq_shift, ampl_shift)
+    %PLAYER play the simple-midi-engine
+    %
+    %   Inputs:
+    %
+    %       wave        the note waveform, one of the methods in Wave.m
+    %       bpm         beats per minute
+    %       tau         note decay function time constant
+    %       freq_shift  scalar frequency shift applied to all notes
+    %       ampl_shift  scalar amplitude shift applied to all notes
+
     % external data sources
     bpm = str2double(bpm); tau = str2double(tau);
     freq_shift = str2double(freq_shift); ampl_shift = str2double(ampl_shift);
